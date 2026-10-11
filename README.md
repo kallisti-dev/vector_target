@@ -2,7 +2,7 @@ A library for vector targeted abilities in Dota 2 custom games.
 
 ![](http://gfycat.com/DisgustingKindBronco)
 
-#Table of Contents
+# Table of Contents
 * [Features](#features)
 * [Installation](#installation)
 * [Basic Setup Guide](#basic-setup-guide)
@@ -20,18 +20,18 @@ A library for vector targeted abilities in Dota 2 custom games.
 * [Planned Improvements and to-do](#planned-improvements-and-to-do)
 * [Feedback, Suggestions, Contributions](#feedback-suggestions-contributions)
 
-#Features
+# Features
 * Fullly configurable through KV
 * Support for custom client-side targeting particles (as well as a default particle that mimics the built-in range finder)
 * Handles both normal and quick cast settings.
 * Handles shift queue (Note: there's currently some issues when the dota order queue gets maxed out)
 
-#Installation
+# Installation
 * Copy files from `game/scripts/vscripts` somewhere into your `dota 2 beta/game/dota_addons/*/vscripts/scripts` folder.
 * Copy files from `content/` into your `dota 2 beta/content/dota_addons/*/` folder.
 * Attach a copy of the [LICENSE](https://github.com/kallisti-dev/vector_target/blob/master/LICENSE) to your source code.
 
-#Basic Setup Guide
+# Basic Setup Guide
 * Add a `require` to your addons_game_mode.lua; For example, if you copied vector_target.lua into `game/dota_addons/*/scripts/vscripts/libraries/` the require would look like this:
 
     ```lua
@@ -63,7 +63,7 @@ A library for vector targeted abilities in Dota 2 custom games.
     </scripts>
     ```
 
-#KV Options
+# KV Options
 For configuration of individual ability behavior, we use custom KV options. Just add these options directly to your existing ability KV, in either `npc_abilities_custom.txt` or `npc_items_custom.txt`. See the [advanced KV loading](#kv-loading-from-file-or-table) section if you want more control over how KV options are loaded.
 
 For default vector targeting behavior, all you need to do is add a non-zero `VectorTarget` key to the ability's definition block.
@@ -92,7 +92,7 @@ For fine-tuning of vector targeting options, you can pass a block with various o
 
 The following sections cover these options in detail.
 
-###Custom Targeting Particles
+## Custom Targeting Particles
 
 You can choose a custom particle system to use instead of the default range finder
 
@@ -112,7 +112,7 @@ You can also feed in custom control point data to your particle system.
             }
 ```
 
-###"Point of Cast"
+## "Point of Cast"
 
 While conceptually a vector targeted ability targets a vector, in the Dota engine it is just a normal point targeted ability. As such, there is a point that the unit must be in range of and turn towards before beginning the cast animation. By default, that point is chosen to be the first point clicked, but you can choose other points as well. This point is called the "point of cast" to avoid confusion with the term "cast point", which has a completely different meaning in Dota terminology.
 
@@ -130,7 +130,7 @@ Using `terminal` will make the caster turn towards the terminal position (second
 
 For complete flexibility, you can instead override the method `GetPointOfCast` on your Lua ability, returning an exact Vector to use.
 
-###Minimum and Maximum Distance
+## Minimum and Maximum Distance
 
 ```javascript
     "MaxDistance"   "1000" // Sets the max distance of the vector. Currently this isn't enforced and we don't
@@ -140,12 +140,12 @@ For complete flexibility, you can instead override the method `GetPointOfCast` o
     "MinDistance"   "500"  // Minimum vector distance, also not fully supported yet.
 ```
 
-#Writing Ability Code
+# Writing Ability Code
 
 Once you've defined abilities to have vector targeting behavior, you can start writing code to actually handle the ability's
 cast logic. When writing ability code you can access the targeting information from a cast via special methods that the library attaches to vector targeted abilities.
 
-##Ability Properties and Methods
+## Ability Properties and Methods
 Any ability that's been modified by the library will have a key named `isVectorTarget` set to true, and will have these methods:
 
 * `:GetInitialPosition()` - The initial position as a Vector
@@ -164,13 +164,13 @@ Any ability that's been modified by the library will have a key named `isVectorT
 
 * `:GetMinDistance()` - The MinDistance KV field. Also unsued currently.
 
-#Code Examples
+# Code Examples
 * A Macropyre-like ability with vector targeting:
     * [Ability KV](https://github.com/kallisti-dev/WarOfExalts/blob/4aaf3c5db5ab4febd3e9ef1bd05c6529c4ca1a8a/game/dota_addons/warofexalts/scripts/npc/abilities/flameshaper_lava_wake.txt)
     * [Ability Lua](https://github.com/kallisti-dev/WarOfExalts/blob/6f62f8c5a21f0c837e9ac43bd34479230c10a76a/game/dota_addons/warofexalts/scripts/vscripts/heroes/flameshaper/flameshaper_lava_wake.lua)
  
-#Advanced Topics
-##KV Loading (From File or Table)
+# Advanced Topics
+## KV Loading (From File or Table)
 If you have a sophisticated custom KV setup for your addon or would simply prefer seperating dota-specific KV stuff from vector-target-specific KV stuff, you can use the `kvList` option when calling `VectorTarget:Init` to load KV options from other sources.
 
   ```lua
@@ -182,7 +182,7 @@ If you have a sophisticated custom KV setup for your addon or would simply prefe
 `kvList` is an array of "KV sources", which can be either file names or Lua tables. If you use a table as a KV source, it should have the same format as a KV table returned by the Valve function `LoadKeyValues`. If you want to disable automatic KV loading, you can explicitly set `kvList` to false
 
 
-##ExecuteOrderFilter
+## ExecuteOrderFilter
 
 This library uses `SetExecuteOrderFilter`. If you have other code that needs to run during this filter, you'll need to
 set the `noOrderFilter` option when calling `VectorTarget:Init`, and then call `VectorTarget:OrderFilter` in your own custom order filter.
@@ -204,7 +204,7 @@ This is a simple example of what your custom filter might look like, but it coul
 to create a standard system for overloading these filter functions in a composable manner, perhaps something incorporated
 into barebones, or a fork of barebones. This would go a long way in making library code more readily interoptable.
  
-##Adding Vector Targeting Behavior to Abilities Dynamically
+## Adding Vector Targeting Behavior to Abilities Dynamically
 The library will "vectorify" all abilities immediately before the first time they're casted. If for some reason you want to do it earlier, you will need to manually call `VectorTarget:WrapAbility`
 
 ```lua
@@ -215,17 +215,17 @@ After the first `VectorTarget:WrapAbility` call, further calls will have no addi
 
 `VectorTarget:WrapUnit` can be used to apply this wrapper to all the current abilities of a unit/NPC.
  
-#Planned Improvements and to-do
+# Planned Improvements and to-do
 * Better options for fast click-drag mode.
 * Support various combinations of unit-targeting and point-targeting, for example HoN's "Vector Entity" target type.
 * Add more built-in particles for area/cone abilities, and wide abilities.
 * Add more variables for the `ControlPoints` KV blocks.
 * Properly handling %variables from `AbilitySpecial` in VectorTarget KV block.
 * Enforce and fully support `MaxDistance` and `MinDistance`. Which includes:
-    *Options for specifying the localization string for "invalid cast distance" error messages.
-    *Add `ControlPoint` variables for range finders to properly show valid/invalid distances
-    *Add level scaling format, i.e.  `"MaxDistance"  "500 600 700 800"`
+    * Options for specifying the localization string for "invalid cast distance" error messages.
+    * Add `ControlPoint` variables for range finders to properly show valid/invalid distances
+    * Add level scaling format, i.e.  `"MaxDistance"  "500 600 700 800"`
   
-#Feedback, Suggestions, Contributions
+# Feedback, Suggestions, Contributions
 
 Plese contact [kallisti.dev@gmail.com](mailto:kallisti.dev@gmail.com) if you have an idea or suggestion, and please submit a pull request to the github repo if you have a modification that would improve the library.
