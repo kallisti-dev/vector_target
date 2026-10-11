@@ -21,18 +21,18 @@ A library for vector targeted abilities in Dota 2 custom games.
 * [Feedback, Suggestions, Contributions](#feedback-suggestions-contributions)
 
 # Features
-* Fullly configurable through KV
+* Fully configurable through KV
 * Support for custom client-side targeting particles (as well as a default particle that mimics the built-in range finder)
 * Handles both normal and quick cast settings.
 * Handles shift queue (Note: there's currently some issues when the dota order queue gets maxed out)
 
 # Installation
-* Copy files from `game/scripts/vscripts` somewhere into your `dota 2 beta/game/dota_addons/*/vscripts/scripts` folder.
+* Copy files from `game/scripts/vscripts` somewhere into your `dota 2 beta/game/dota_addons/*/scripts/vscripts` folder.
 * Copy files from `content/` into your `dota 2 beta/content/dota_addons/*/` folder.
 * Attach a copy of the [LICENSE](https://github.com/kallisti-dev/vector_target/blob/master/LICENSE) to your source code.
 
 # Basic Setup Guide
-* Add a `require` to your addons_game_mode.lua; For example, if you copied vector_target.lua into `game/dota_addons/*/scripts/vscripts/libraries/` the require would look like this:
+* Add a `require` to your addon_game_mode.lua; For example, if you copied vector_target.lua into `game/dota_addons/*/scripts/vscripts/libraries/` the require would look like this:
 
     ```lua
     require("libraries.vector_target")
@@ -152,7 +152,7 @@ Any ability that's been modified by the library will have a key named `isVectorT
     
 * `:GetTerminalPosition()` - The terminal position as a Vector
 
-* `:GetMidpointPosition()` - The midpoint betwen initial/terminal as a Vector
+* `:GetMidpointPosition()` - The midpoint between initial/terminal as a Vector
 
 * `:GetTargetVector()` - The actual vector in the phrase "vector target", composed from the initial and terminal positions of the cast.
                      
@@ -162,7 +162,7 @@ Any ability that's been modified by the library will have a key named `isVectorT
 
 * `:GetMaxDistance()` - The MaxDistance KV field. Currently unused by the library, but provided for ability logic.
 
-* `:GetMinDistance()` - The MinDistance KV field. Also unsued currently.
+* `:GetMinDistance()` - The MinDistance KV field. Also unused currently.
 
 # Code Examples
 * A Macropyre-like ability with vector targeting:
@@ -171,7 +171,7 @@ Any ability that's been modified by the library will have a key named `isVectorT
  
 # Advanced Topics
 ## KV Loading (From File or Table)
-If you have a sophisticated custom KV setup for your addon or would simply prefer seperating dota-specific KV stuff from vector-target-specific KV stuff, you can use the `kvList` option when calling `VectorTarget:Init` to load KV options from other sources.
+If you have a sophisticated custom KV setup for your addon or would simply prefer separating dota-specific KV stuff from vector-target-specific KV stuff, you can use the `kvList` option when calling `VectorTarget:Init` to load KV options from other sources.
 
   ```lua
   VectorTarget:Init({
@@ -202,7 +202,7 @@ This is a simple example of what your custom filter might look like, but it coul
 
 **A call to action for the modding community**: I would be very interested in working with the modding community
 to create a standard system for overloading these filter functions in a composable manner, perhaps something incorporated
-into barebones, or a fork of barebones. This would go a long way in making library code more readily interoptable.
+into barebones, or a fork of barebones. This would go a long way in making library code more readily interoperable.
  
 ## Adding Vector Targeting Behavior to Abilities Dynamically
 The library will "vectorify" all abilities immediately before the first time they're casted. If for some reason you want to do it earlier, you will need to manually call `VectorTarget:WrapAbility`
@@ -228,4 +228,4 @@ After the first `VectorTarget:WrapAbility` call, further calls will have no addi
   
 # Feedback, Suggestions, Contributions
 
-Plese contact [kallisti.dev@gmail.com](mailto:kallisti.dev@gmail.com) if you have an idea or suggestion, and please submit a pull request to the github repo if you have a modification that would improve the library.
+Please contact [kallisti.dev@gmail.com](mailto:kallisti.dev@gmail.com) if you have an idea or suggestion, and please submit a pull request to the github repo if you have a modification that would improve the library.
