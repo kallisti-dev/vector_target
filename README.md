@@ -1,3 +1,5 @@
+> **This project is obsolete as Dota 2 now supports vector targeting natively.**
+
 A library for vector targeted abilities in Dota 2 custom games.
 
 ![vector target demo](docs/demo.gif)
